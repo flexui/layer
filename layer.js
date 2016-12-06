@@ -1,5 +1,5 @@
-import Events from 'events';
-import * as Utils from 'utils';
+import Events from '@flexui/events';
+import * as Utils from '@flexui/utils';
 import { ZINDEX } from './lib/z-index';
 import { BACKDROP } from './lib/backdrop';
 
