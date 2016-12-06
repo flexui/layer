@@ -1,0 +1,27 @@
+{
+  "name": "layer",
+  "version": "0.0.1",
+  "description": "The flex ui base layer tools.",
+  "author": {
+    "name": "nuintun",
+    "email": "nuintun@qq.com"
+  },
+  "homepage": "https://flexui.github.io/layer",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/flexui/layer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/flexui/layer/issues",
+    "email": "nuintun@qq.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "utils"
+  ],
+  "dependencies": {
+    "utils": "https://github.com/flexui/utils/archive/master.tar.gz",
+    "events": "https://github.com/flexui/events/archive/master.tar.gz"
+  },
+  "readmeFilename": "README.md"
+}
