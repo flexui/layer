@@ -1,5 +1,5 @@
 {
-  "name": "layer",
+  "name": "flexui-layer",
   "version": "0.0.1",
   "description": "The flex ui base layer tools.",
   "author": {
@@ -19,10 +19,15 @@
   "keywords": [
     "layer"
   ],
-  "main": "layer.js",
+  "jsnext:main": "layer.js",
   "dependencies": {
     "utils": "https://github.com/flexui/utils/archive/master.tar.gz",
     "events": "https://github.com/flexui/events/archive/master.tar.gz"
+  },
+  "devDependencies": {
+    "rollup": "^0.36.4",
+    "uglify-js": "^2.7.5",
+    "rollup-plugin-node-resolve": "^2.0.0"
   },
   "readmeFilename": "README.md"
 }
