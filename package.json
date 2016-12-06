@@ -17,8 +17,9 @@
   },
   "license": "MIT",
   "keywords": [
-    "utils"
+    "layer"
   ],
+  "main": "layer.js",
   "dependencies": {
     "utils": "https://github.com/flexui/utils/archive/master.tar.gz",
     "events": "https://github.com/flexui/events/archive/master.tar.gz"
