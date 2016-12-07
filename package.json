@@ -24,10 +24,5 @@
     "@flexui/utils": "https://github.com/flexui/utils/archive/master.tar.gz",
     "@flexui/events": "https://github.com/flexui/events/archive/master.tar.gz"
   },
-  "devDependencies": {
-    "rollup": "^0.36.4",
-    "uglify-js": "^2.7.5",
-    "rollup-plugin-node-resolve": "^2.0.0"
-  },
   "readmeFilename": "README.md"
 }
