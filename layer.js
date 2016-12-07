@@ -29,7 +29,7 @@ Layer.active = null;
 // 层级
 Layer.zIndex = ZINDEX;
 // 锁屏遮罩
-Layer.backdrop = BACKDROP.node;
+Layer.backdrop = BACKDROP;
 
 // 锁定 tab 焦点在弹窗内
 Utils.doc.on('focusin', function(e) {
@@ -116,7 +116,7 @@ Utils.inherits(Layer, Events, {
     }
 
     // 检查焦点是否在浮层里面
-    if (!layer.contains(context.__getActive())) {
+    if (!node.contains(context.__getActive())) {
       var autofocus = layer.find('[autofocus]')[0];
 
       if (!context.__autofocus && autofocus) {
@@ -134,7 +134,7 @@ Utils.inherits(Layer, Events, {
       var index = context.zIndex = Layer.zIndex++;
 
       // 设置遮罩层级
-      Backdrop.zIndex(index);
+      BACKDROP.zIndex(index);
       // 设置弹窗层级
       layer.css('zIndex', index);
       // 添加激活类名
