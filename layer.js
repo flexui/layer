@@ -31,6 +31,13 @@ Layer.zIndex = ZINDEX;
 // 锁屏遮罩
 Layer.backdrop = BACKDROP;
 
+// 清理激活状体
+Layer.cleanActive = function(context) {
+  if (Layer.active === context) {
+    Layer.active = null;
+  }
+};
+
 // 锁定 tab 焦点在弹窗内
 Utils.doc.on('focusin', function(e) {
   var active = Layer.active;
@@ -49,54 +56,63 @@ Utils.doc.on('focusin', function(e) {
 Utils.inherits(Layer, Events, {
   /**
    * 浮层 DOM 元素节点
+   *
    * @public
    * @readonly
    */
   node: null,
   /**
    * 判断对话框是否删除
+   *
    * @public
    * @readonly
    */
   destroyed: true,
   /**
    * 判断对话框是否显示
+   *
    * @public
    * @readonly
    */
   open: false,
   /**
    * 是否自动聚焦
+   *
    * @public
    * @property
    */
   autofocus: true,
   /**
    * 是否是模态窗口
+   *
    * @public
    * @property
    */
   modal: false,
   /**
    * 内部的 HTML 字符串
+   *
    * @public
    * @property
    */
   innerHTML: '',
   /**
    * CSS 类名
+   *
    * @public
    * @property
    */
   className: 'ui-layer',
   /**
    * 构造函数
+   *
    * @public
    * @readonly
    */
   constructor: Layer,
   /**
    * 让浮层获取焦点
+   *
    * @public
    */
   focus: function() {
@@ -150,6 +166,7 @@ Utils.inherits(Layer, Events, {
   },
   /**
    * 让浮层失去焦点。将焦点退还给之前的元素，照顾视力障碍用户
+   *
    * @public
    */
   blur: function() {
@@ -162,6 +179,9 @@ Utils.inherits(Layer, Events, {
 
     var isBlur = arguments[0];
     var activeElement = context.__activeElement;
+
+    // 清理激活状态
+    context.__cleanActive();
 
     if (isBlur !== false) {
       context.__focus(activeElement);
@@ -176,6 +196,7 @@ Utils.inherits(Layer, Events, {
   },
   /**
    * 对元素安全聚焦
+   *
    * @private
    * @param {HTMLElement} element
    */
@@ -193,6 +214,7 @@ Utils.inherits(Layer, Events, {
   },
   /**
    * 获取当前焦点的元素
+   *
    * @private
    */
   __getActive: function() {
@@ -205,6 +227,16 @@ Utils.inherits(Layer, Events, {
       return element;
     } catch (e) {
       // error
+    }
+  },
+  /**
+   * 清理激活状态
+   *
+   * @private
+   */
+  __cleanActive: function() {
+    if (Layer.active === this) {
+      Layer.active = null;
     }
   }
 });
