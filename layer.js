@@ -18,12 +18,6 @@ export default function Layer() {
   context.__node = $(context.node)
     // 设置 tabindex
     .attr('tabindex', '-1')
-    // 设置样式
-    .css({
-      display: 'none',
-      position: 'absolute',
-      outline: 0
-    })
     // 绑定得到焦点事件
     .on('focusin', function() {
       context.focus();
