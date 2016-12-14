@@ -151,8 +151,12 @@ Utils.inherits(Layer, Events, {
     if (active !== context) {
       var index = context.zIndex = Layer.zIndex++;
 
-      // 设置遮罩层级
-      BACKDROP.zIndex(index);
+      // 刷新遮罩
+      if (context.modal) {
+        BACKDROP.show(context);
+        BACKDROP.zIndex(index);
+      }
+
       // 设置弹窗层级
       layer.css('zIndex', index);
       // 添加激活类名
