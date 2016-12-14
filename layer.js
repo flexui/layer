@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import Events from '@flexui/events';
 import * as Utils from '@flexui/utils';
-import { Z_INDEX } from '@flexui/z-index';
+import { getZIndex } from '@flexui/z-index';
 import { BACKDROP } from './lib/backdrop';
 
 /**
@@ -148,7 +148,7 @@ Utils.inherits(Layer, Events, {
 
     // 非激活状态才做处理
     if (active !== context) {
-      var index = context.zIndex = Z_INDEX++;
+      var index = context.zIndex = getZIndex(true);
 
       // 刷新遮罩
       if (context.modal) {
