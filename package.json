@@ -22,7 +22,8 @@
   "jsnext:main": "layer.js",
   "dependencies": {
     "@flexui/utils": "https://github.com/flexui/utils/archive/master.tar.gz",
-    "@flexui/events": "https://github.com/flexui/events/archive/master.tar.gz"
+    "@flexui/events": "https://github.com/flexui/events/archive/master.tar.gz",
+    "@flexui/z-index": "https://github.com/flexui/z-index/archive/master.tar.gz"
   },
   "readmeFilename": "README.md"
 }
