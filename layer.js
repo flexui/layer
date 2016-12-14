@@ -1,7 +1,6 @@
 import $ from 'jquery';
 import Events from '@flexui/events';
 import * as Utils from '@flexui/utils';
-import { ZINDEX } from './lib/z-index';
 import { BACKDROP } from './lib/backdrop';
 
 /**
@@ -27,7 +26,7 @@ export default function Layer() {
 // 当前得到焦点的实例
 Layer.active = null;
 // 层级
-Layer.zIndex = ZINDEX;
+Layer.zIndex = 1024;
 // 锁屏遮罩
 Layer.backdrop = BACKDROP;
 
