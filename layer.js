@@ -20,7 +20,10 @@ export default function Layer() {
     .attr('tabindex', '-1')
     // 绑定得到焦点事件
     .on('focusin', function() {
-      context.focus();
+      // 非模态自动聚焦
+      if (!context.modal) {
+        context.focus();
+      }
     });
 }
 
