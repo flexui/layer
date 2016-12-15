@@ -15,16 +15,7 @@ export default function Layer() {
 
   context.destroyed = false;
   context.node = document.createElement('div');
-  context.__node = $(context.node)
-    // 设置 tabindex
-    .attr('tabindex', '-1')
-    // 绑定得到焦点事件
-    .on('focusin', function() {
-      // 非模态自动聚焦
-      if (!context.modal) {
-        context.focus();
-      }
-    });
+  context.__node = $(context.node).attr('tabindex', '-1');
 }
 
 // 当前得到焦点的实例
@@ -42,11 +33,13 @@ Layer.cleanActive = function(context) {
 // 锁定 tab 焦点在弹窗内
 Utils.doc.on('focusin', function(e) {
   var active = Layer.active;
+  var modal = BACKDROP.alloc.length;
 
-  if (active && active.modal) {
+  if (active && modal) {
     var target = e.target;
     var node = active.node;
 
+    // 锁定焦点
     if (target !== node && !node.contains(target)) {
       active.focus();
     }
