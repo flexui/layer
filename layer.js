@@ -36,20 +36,6 @@ Layer.cleanActive = function(context) {
   }
 };
 
-// 锁定 tab 焦点在弹窗内
-Utils.doc.on('focusin', function(e) {
-  var active = Layer.active;
-
-  if (active && active.modal) {
-    var target = e.target;
-    var node = active.node;
-
-    if (target !== node && !node.contains(target)) {
-      active.focus();
-    }
-  }
-});
-
 // 原型方法
 Utils.inherits(Layer, Events, {
   /**
