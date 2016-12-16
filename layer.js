@@ -167,13 +167,10 @@ Utils.inherits(Layer, Events, {
 
       // 获取焦点
       context.__focus(autofocus);
-
-      // 重新获取激活实例
-      active = Layer.active;
     }
 
     // 非激活状态才做处理
-    if (active !== context) {
+    if (Layer.active !== context) {
       var index = context.zIndex = getZIndex(true);
 
       // 刷新遮罩
