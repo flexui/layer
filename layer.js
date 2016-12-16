@@ -5,6 +5,19 @@ import { getZIndex } from '@flexui/z-index';
 import { BACKDROP } from './lib/backdrop';
 import { FOCUS_LOCKER } from './lib/focus-locker';
 
+// 锁定 tab 焦点在弹窗内
+BACKDROP
+  .node
+  .add(FOCUS_LOCKER.node)
+  .on('focus', function() {
+    var anchor = BACKDROP.anchor;
+
+    // 重置焦点
+    if (anchor) {
+      anchor.__focus(anchor.node);
+    }
+  });
+
 /**
  * Layer
  *
@@ -16,7 +29,11 @@ export default function Layer() {
 
   context.destroyed = false;
   context.node = document.createElement('div');
-  context.__node = $(context.node).attr('tabindex', '-1');
+  context.__node = $(context.node)
+    .attr('tabindex', '-1')
+    .on('click', function() {
+      context.focus();
+    });
 }
 
 // 当前得到焦点的实例
@@ -32,22 +49,6 @@ Layer.cleanActive = function(context) {
     Layer.active = null;
   }
 };
-
-// 锁定 tab 焦点在弹窗内
-Utils.doc.on('focusin', function(e) {
-  var active = Layer.active;
-  var modal = BACKDROP.exists();
-
-  if (active && modal) {
-    var target = e.target;
-    var node = active.node;
-
-    // 锁定焦点
-    if (target !== node && !node.contains(target)) {
-      active.focus();
-    }
-  }
-});
 
 // 原型方法
 Utils.inherits(Layer, Events, {
