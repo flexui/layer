@@ -178,7 +178,9 @@ Utils.inherits(Layer, Events, {
 
       // 刷新遮罩
       if (context.modal && context !== BACKDROP.anchor) {
+        // 刷新遮罩位置
         BACKDROP.show(context);
+        // 刷新遮罩层级
         BACKDROP.zIndex(index);
       }
 
