@@ -28,30 +28,7 @@ export function Layer() {
       if (context !== Layer.active) {
         context.focus();
       }
-    })
-    // 失去焦点
-    .on('focusout', function() {
-      if (context === Layer.active) {
-        context.blur();
-      }
     });
-}
-
-/**
- * 安全聚焦
- * @param {HTMLElement} element
- */
-function safeFocus(element) {
-  // 防止 iframe 跨域无权限报错
-  // 防止 IE 不可见元素报错
-  try {
-    // ie11 bug: iframe 页面点击会跳到顶部
-    if (!/^iframe$/i.test(element.nodeName)) {
-      element.focus();
-    }
-  } catch (e) {
-    // error
-  }
 }
 
 // 当前得到焦点的实例
@@ -62,13 +39,19 @@ Utils.doc.on('focusin', function(e) {
   e.preventDefault();
 
   var target = e.target;
+  var active = Layer.active;
+
+  // 焦点不在弹窗让焦点失去焦点
+  if (active && target !== active.node && !active.node.contains(target)) {
+    active.blur(false);
+  }
 
   if (target === BACKDROP.node[0] || target === FOCUS_LOCK.node[0]) {
     var anchor = BACKDROP.anchor;
 
     // 重置焦点
     if (anchor && anchor.open) {
-      safeFocus(anchor.__node.find('[autofocus]')[0] || anchor.node);
+      anchor.focus();
     }
   }
 });
@@ -107,13 +90,6 @@ Utils.inherits(Layer, Events, {
    * @readonly
    */
   open: false,
-  /**
-   * 是否自动聚焦
-   *
-   * @public
-   * @property
-   */
-  autofocus: true,
   /**
    * 是否是模态窗口
    *
@@ -165,16 +141,8 @@ Utils.inherits(Layer, Events, {
 
     // 检查焦点是否在浮层里面
     if (!node.contains(context.__getActive())) {
-      var autofocus = layer.find('[autofocus]')[0];
-
-      if (!context.__autofocus && autofocus) {
-        context.__autofocus = true;
-      } else {
-        autofocus = node;
-      }
-
       // 获取焦点
-      context.__focus(autofocus);
+      context.__focus(layer.find('[autofocus]')[0] || node);
     }
 
     // 非激活状态才做处理
@@ -224,8 +192,6 @@ Utils.inherits(Layer, Events, {
       context.__focus(context.__activeElement);
     }
 
-    context.__autofocus = false;
-
     context.__node.removeClass(context.className + '-focus');
     context.emit('blur');
 
@@ -238,8 +204,15 @@ Utils.inherits(Layer, Events, {
    * @param {HTMLElement} element
    */
   __focus: function(element) {
-    if (this.autofocus) {
-      safeFocus(element);
+    // 防止 iframe 跨域无权限报错
+    // 防止 IE 不可见元素报错
+    try {
+      // ie11 bug: iframe 页面点击会跳到顶部
+      if (!/^iframe$/i.test(element.nodeName)) {
+        element.focus();
+      }
+    } catch (e) {
+      // error
     }
   },
   /**
