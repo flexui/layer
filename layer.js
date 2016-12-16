@@ -10,19 +10,20 @@ export * from './lib/backdrop.js';
 export * from './lib/focus-lock.js';
 
 // 锁定 tab 焦点在弹窗内
-BACKDROP
-  .node
-  .add(FOCUS_LOCK.node)
-  .on('focus', function(e) {
-    e.preventDefault();
+Utils.doc.on('focusin', function(e) {
+  e.preventDefault();
 
+  var target = e.target;
+
+  if (target === BACKDROP.node[0] || target === FOCUS_LOCK.node[0]) {
     var anchor = BACKDROP.anchor;
 
     // 重置焦点
     if (anchor) {
       anchor.__focus(anchor.node);
     }
-  });
+  }
+});
 
 /**
  * Layer
