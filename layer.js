@@ -9,22 +9,6 @@ import { FOCUS_LOCK } from './lib/focus-lock';
 export * from './lib/backdrop.js';
 export * from './lib/focus-lock.js';
 
-// 锁定 tab 焦点在弹窗内
-Utils.doc.on('focusin', function(e) {
-  e.preventDefault();
-
-  var target = e.target;
-
-  if (target === BACKDROP.node[0] || target === FOCUS_LOCK.node[0]) {
-    var anchor = BACKDROP.anchor;
-
-    // 重置焦点
-    if (anchor) {
-      anchor.__focus(anchor.node);
-    }
-  }
-});
-
 /**
  * Layer
  *
@@ -38,13 +22,29 @@ export function Layer() {
   context.node = document.createElement('div');
   context.__node = $(context.node)
     .attr('tabindex', '-1')
-    .on('click', function() {
+    .on('focusin', function() {
       context.focus();
     });
 }
 
 // 当前得到焦点的实例
 Layer.active = null;
+
+// 锁定 tab 焦点在弹窗内
+Utils.doc.on('focusin', function(e) {
+  e.preventDefault();
+
+  var target = e.target;
+
+  if (target === BACKDROP.node[0] || target === FOCUS_LOCK.node[0]) {
+    var anchor = BACKDROP.anchor;
+
+    // 重置焦点
+    if (anchor && anchor.open) {
+      anchor.__focus(anchor.node);
+    }
+  }
+});
 
 /**
  * 清理激活状态
