@@ -3,7 +3,11 @@ import Events from '@flexui/events';
 import * as Utils from '@flexui/utils';
 import { getZIndex } from '@flexui/z-index';
 import { BACKDROP } from './lib/backdrop';
-import { FOCUS_LOCKER } from './lib/focus-locker';
+import { FOCUS_LOCK } from './lib/focus-lock';
+
+// 导出接口
+export * from './lib/backdrop.js';
+export * from './lib/focus-lock.js';
 
 // 锁定 tab 焦点在弹窗内
 BACKDROP
@@ -24,7 +28,7 @@ BACKDROP
  * @constructor
  * @export
  */
-export default function Layer() {
+export function Layer() {
   var context = this;
 
   context.destroyed = false;
@@ -38,13 +42,13 @@ export default function Layer() {
 
 // 当前得到焦点的实例
 Layer.active = null;
-// 锁屏遮罩层
-Layer.backdrop = BACKDROP;
-// 焦点锁定层
-Layer.focusLocker = FOCUS_LOCKER;
 
-// 清理激活状体
-Layer.cleanActive = function(context) {
+/**
+ * 清理激活状态
+ *
+ * @param {Layer} context
+ */
+Layer.cleanActive = function cleanActive(context) {
   if (Layer.active === context) {
     Layer.active = null;
   }
@@ -151,7 +155,7 @@ Utils.inherits(Layer, Events, {
       var index = context.zIndex = getZIndex(true);
 
       // 刷新遮罩
-      if (context.modal) {
+      if (context.modal && context !== BACKDROP.anchor) {
         BACKDROP.show(context);
         BACKDROP.zIndex(index);
       }
@@ -185,7 +189,7 @@ Utils.inherits(Layer, Events, {
     var isBlur = arguments[0];
 
     // 清理激活状态
-    context.__cleanActive();
+    cleanActive(context);
 
     if (isBlur !== false) {
       context.__focus(context.__activeElement);
@@ -231,16 +235,6 @@ Utils.inherits(Layer, Events, {
       return element;
     } catch (e) {
       // error
-    }
-  },
-  /**
-   * 清理激活状态
-   *
-   * @private
-   */
-  __cleanActive: function() {
-    if (Layer.active === this) {
-      Layer.active = null;
     }
   }
 });
