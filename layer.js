@@ -12,8 +12,10 @@ export * from './lib/focus-lock.js';
 // 锁定 tab 焦点在弹窗内
 BACKDROP
   .node
-  .add(FOCUS_LOCKER.node)
-  .on('focus', function() {
+  .add(FOCUS_LOCK.node)
+  .on('focus', function(e) {
+    e.preventDefault();
+
     var anchor = BACKDROP.anchor;
 
     // 重置焦点
@@ -48,7 +50,7 @@ Layer.active = null;
  *
  * @param {Layer} context
  */
-Layer.cleanActive = function cleanActive(context) {
+Layer.cleanActive = function(context) {
   if (Layer.active === context) {
     Layer.active = null;
   }
@@ -189,7 +191,7 @@ Utils.inherits(Layer, Events, {
     var isBlur = arguments[0];
 
     // 清理激活状态
-    cleanActive(context);
+    Layer.cleanActive(context);
 
     if (isBlur !== false) {
       context.__focus(context.__activeElement);
