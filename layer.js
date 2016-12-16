@@ -3,6 +3,7 @@ import Events from '@flexui/events';
 import * as Utils from '@flexui/utils';
 import { getZIndex } from '@flexui/z-index';
 import { BACKDROP } from './lib/backdrop';
+import { FOCUS_LOCKER } from './lib/focus-locker';
 
 /**
  * Layer
@@ -20,8 +21,10 @@ export default function Layer() {
 
 // 当前得到焦点的实例
 Layer.active = null;
-// 锁屏遮罩
+// 锁屏遮罩层
 Layer.backdrop = BACKDROP;
+// 焦点锁定层
+Layer.focusLocker = FOCUS_LOCKER;
 
 // 清理激活状体
 Layer.cleanActive = function(context) {
@@ -33,7 +36,7 @@ Layer.cleanActive = function(context) {
 // 锁定 tab 焦点在弹窗内
 Utils.doc.on('focusin', function(e) {
   var active = Layer.active;
-  var modal = BACKDROP.alloc.length;
+  var modal = BACKDROP.exists();
 
   if (active && modal) {
     var target = e.target;
