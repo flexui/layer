@@ -23,7 +23,9 @@ export function Layer() {
   context.__node = $(context.node)
     .attr('tabindex', '-1')
     .on('focusin', function() {
-      context.focus();
+      if (context !== Layer.active) {
+        context.focus();
+      }
     });
 }
 
@@ -52,7 +54,7 @@ Utils.doc.on('focusin', function(e) {
  * @param {Layer} context
  */
 Layer.cleanActive = function(context) {
-  if (Layer.active === context) {
+  if (!FOCUS_LOCK.count || Layer.active === context) {
     Layer.active = null;
   }
 };
