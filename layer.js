@@ -36,8 +36,6 @@ Layer.active = null;
 
 // 锁定 tab 焦点在弹窗内
 Utils.doc.on('focusin', function(e) {
-  e.preventDefault();
-
   var target = e.target;
   var active = Layer.active;
   var anchor = BACKDROP.anchor;
@@ -51,6 +49,7 @@ Utils.doc.on('focusin', function(e) {
   // 锁定焦点
   if (anchor && anchor.open &&
     (target === BACKDROP.node[0] || target === FOCUS_LOCK.node[0])) {
+    e.preventDefault();
     anchor.focus();
   }
 });
