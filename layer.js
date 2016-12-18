@@ -191,11 +191,9 @@ Utils.inherits(Layer, Events, {
     // 清理激活状态
     Layer.cleanActive(context);
 
-    if (isBlur !== false) {
-      context.__focus(context.__activeElement);
-    }
-
+    // 移除类名
     context.__node.removeClass(context.className + LAYER_CLASS_FOCUS);
+    // 触发失去焦点事件
     context.emit('blur');
 
     return context;
