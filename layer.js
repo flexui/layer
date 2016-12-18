@@ -160,10 +160,10 @@ Utils.inherits(Layer, Events, {
       if (context.modal && context !== BACKDROP.anchor) {
         // 刷新遮罩位置
         BACKDROP.show(context);
-        // 刷新遮罩层级
-        BACKDROP.zIndex(index);
         // 刷新焦点锁定层
         TAB_LOCK.show(context);
+        // 刷新遮罩层级
+        BACKDROP.zIndex(index);
       }
 
       // 设置弹窗层级
