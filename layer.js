@@ -129,21 +129,26 @@ Utils.inherits(Layer, Events, {
       return context;
     }
 
-    var node = context.node;
-    var layer = context.__node;
+    // 激活实例
     var active = Layer.active;
 
+    // 先让上一个激活实例失去焦点
     if (active && active !== context) {
       active.blur(false);
     }
 
+    // 浮层
+    var node = context.node;
+    var layer = context.__node;
+    var focused = context.__getActive();
+
     // 检查焦点是否在浮层里面
-    if (!node.contains(context.__getActive())) {
-      // 获取焦点
+    if (node !== focused && !node.contains(focused)) {
+      // 自动聚焦
       context.__focus(layer.find('[autofocus]')[0] || node);
     }
 
-    // 非激活状态才做处理
+    // 非激活状态刷新浮层状态
     if (Layer.active !== context) {
       var index = context.zIndex = getZIndex(true);
 
