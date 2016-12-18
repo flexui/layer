@@ -53,17 +53,6 @@ Utils.doc.on('focusin', function(e) {
   }
 });
 
-/**
- * 清理激活状态
- *
- * @param {Layer} context
- */
-Layer.cleanActive = function(context) {
-  if (Layer.active === context) {
-    Layer.active = null;
-  }
-};
-
 // 原型方法
 Utils.inherits(Layer, Events, {
   /**
@@ -186,15 +175,15 @@ Utils.inherits(Layer, Events, {
       return context;
     }
 
-    var isBlur = arguments[0];
+    if (context === Layer.active) {
+      // 清理激活状态
+      Layer.active = null;
 
-    // 清理激活状态
-    Layer.cleanActive(context);
-
-    // 移除类名
-    context.__node.removeClass(context.className + LAYER_CLASS_FOCUS);
-    // 触发失去焦点事件
-    context.emit('blur');
+      // 移除类名
+      context.__node.removeClass(context.className + LAYER_CLASS_FOCUS);
+      // 触发失去焦点事件
+      context.emit('blur');
+    }
 
     return context;
   },
