@@ -92,7 +92,7 @@ Utils.inherits(Layer, Events, {
    * 是否是模态窗口
    *
    * @public
-   * @property
+   * @readonly
    */
   modal: false,
   /**
