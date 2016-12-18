@@ -14,7 +14,7 @@ var LAYER_CLASS_FOCUS = '-focus';
  * @constructor
  * @export
  */
-export function Layer() {
+export default function Layer() {
   var context = this;
 
   context.destroyed = false;
