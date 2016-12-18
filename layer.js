@@ -3,7 +3,7 @@ import Events from '@flexui/events';
 import * as Utils from '@flexui/utils';
 import { getZIndex } from '@flexui/z-index';
 import { BACKDROP } from './lib/backdrop';
-import { FOCUS_LOCK } from './lib/focus-lock';
+import { TAB_LOCK } from './lib/tab-lock';
 
 // 导出接口
 export * from './lib/backdrop.js';
@@ -48,7 +48,7 @@ Utils.doc.on('focusin', function(e) {
 
   // 锁定焦点
   if (anchor && anchor.open &&
-    (target === BACKDROP.node[0] || target === FOCUS_LOCK.node[0])) {
+    (target === BACKDROP.node[0] || target === TAB_LOCK.node[0])) {
     e.preventDefault();
     anchor.focus();
   }
@@ -60,7 +60,7 @@ Utils.doc.on('focusin', function(e) {
  * @param {Layer} context
  */
 Layer.cleanActive = function(context) {
-  if (!FOCUS_LOCK.count || Layer.active === context) {
+  if (Layer.active === context) {
     Layer.active = null;
   }
 };
@@ -154,6 +154,9 @@ Utils.inherits(Layer, Events, {
         // 刷新遮罩层级
         BACKDROP.zIndex(index);
       }
+
+      // 刷新焦点锁定层
+      TAB_LOCK.show(context);
 
       // 设置弹窗层级
       layer.css('zIndex', index);
