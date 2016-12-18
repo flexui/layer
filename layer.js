@@ -134,7 +134,7 @@ Utils.inherits(Layer, Events, {
 
     // 先让上一个激活实例失去焦点
     if (active && active !== context) {
-      active.blur(false);
+      active.blur();
     }
 
     // 浮层
