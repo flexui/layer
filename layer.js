@@ -5,10 +5,6 @@ import { getZIndex } from '@flexui/z-index';
 import { BACKDROP } from './lib/backdrop.js';
 import { TAB_LOCK } from './lib/tab-lock.js';
 
-// 导出接口
-export * from './lib/backdrop.js';
-export * from './lib/tab-lock.js';
-
 // 得到焦点类名
 var LAYER_CLASS_FOCUS = '-focus';
 
@@ -239,6 +235,34 @@ Utils.inherits(Layer, Events, {
       return element;
     } catch (e) {
       // error
+    }
+  },
+  /**
+   * 智能遮罩操作方法
+   *
+   * @private
+   * @param {String} method
+   * @param {Any} value
+   */
+  __backdrop: function(method, value) {
+    var context = this;
+
+    switch (method) {
+      case 'show':
+      case 'hide':
+        // 遮罩层
+        if (context.modal) {
+          BACKDROP[method](context);
+        }
+
+        // 焦点锁定层
+        TAB_LOCK[method](context);
+        break;
+      case 'z-index':
+        if (context.modal) {
+          BACKDROP.zIndex(value);
+        }
+        break;
     }
   }
 });
