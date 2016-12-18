@@ -9,6 +9,9 @@ import { TAB_LOCK } from './lib/tab-lock.js';
 export * from './lib/backdrop.js';
 export * from './lib/tab-lock.js';
 
+// 得到焦点类名
+var LAYER_CLASS_FOCUS = '-focus';
+
 /**
  * Layer
  *
@@ -163,7 +166,7 @@ Utils.inherits(Layer, Events, {
       // 设置弹窗层级
       layer.css('zIndex', index);
       // 添加激活类名
-      layer.addClass(context.className + '-focus');
+      layer.addClass(context.className + LAYER_CLASS_FOCUS);
       // 触发事件
       context.emit('focus');
 
@@ -195,7 +198,7 @@ Utils.inherits(Layer, Events, {
       context.__focus(context.__activeElement);
     }
 
-    context.__node.removeClass(context.className + '-focus');
+    context.__node.removeClass(context.className + LAYER_CLASS_FOCUS);
     context.emit('blur');
 
     return context;
