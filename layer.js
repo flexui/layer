@@ -107,6 +107,7 @@ Utils.inherits(Layer, Events, {
   innerHTML: '',
   /**
    * CSS 类名
+   * 只在浮层未初始化前可设置，之后不能更改
    *
    * @public
    * @property
