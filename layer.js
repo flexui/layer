@@ -2,12 +2,12 @@ import $ from 'jquery';
 import Events from '@flexui/events';
 import * as Utils from '@flexui/utils';
 import { getZIndex } from '@flexui/z-index';
-import { BACKDROP } from './lib/backdrop';
-import { TAB_LOCK } from './lib/tab-lock';
+import { BACKDROP } from './lib/backdrop.js';
+import { TAB_LOCK } from './lib/tab-lock.js';
 
 // 导出接口
 export * from './lib/backdrop.js';
-export * from './lib/focus-lock.js';
+export * from './lib/tab-lock.js';
 
 /**
  * Layer
