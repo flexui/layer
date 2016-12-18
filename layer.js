@@ -155,9 +155,6 @@ Utils.inherits(Layer, Events, {
         BACKDROP.zIndex(index);
       }
 
-      // 刷新焦点锁定层
-      TAB_LOCK.show(context);
-
       // 设置弹窗层级
       layer.css('zIndex', index);
       // 添加激活类名
