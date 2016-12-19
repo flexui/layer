@@ -33,22 +33,31 @@ export default function Layer() {
 // 当前得到焦点的实例
 Layer.active = null;
 
-// 锁定 tab 焦点在弹窗内
+// 锁定 tab 焦点在浮层内
 Utils.doc.on('focusin', function(e) {
   var target = e.target;
   var active = Layer.active;
   var anchor = BACKDROP.anchor;
 
-  // 焦点不在弹窗让焦点失去焦点
-  if (active && active !== anchor &&
-    target !== active.node && !active.node.contains(target)) {
-    active.blur(false);
-  }
-
-  // 锁定焦点
-  if (anchor && anchor.open &&
-    (target === BACKDROP.node[0] || target === TAB_LOCK.node[0])) {
-    anchor.focus();
+  if (anchor) {
+    // 锁定焦点
+    switch (target) {
+      case BACKDROP.node[0]:
+        if (active) {
+          active.focus();
+        } else {
+          anchor.focus();
+        }
+        break;
+      case TAB_LOCK.node[0]:
+        anchor.focus();
+        break;
+    }
+  } else if (active &&
+    target !== active.node &&
+    !active.node.contains(target)) {
+    // 焦点不在浮层让浮层失焦
+    active.blur();
   }
 });
 
@@ -148,7 +157,7 @@ Utils.inherits(Layer, Events, {
         context.__backdrop('z-index', index);
       }
 
-      // 设置弹窗层级
+      // 设置浮层层级
       layer.css('zIndex', index);
       // 添加激活类名
       layer.addClass(context.className + LAYER_CLASS_FOCUS);
