@@ -226,7 +226,7 @@ Utils.inherits(Layer, Events, {
    *
    * @private
    * @param {String} method
-   * @param {Any} value
+   * @param {any} value
    */
   __backdrop: function(method, value) {
     var context = this;
