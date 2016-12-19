@@ -48,7 +48,6 @@ Utils.doc.on('focusin', function(e) {
   // 锁定焦点
   if (anchor && anchor.open &&
     (target === BACKDROP.node[0] || target === TAB_LOCK.node[0])) {
-    e.preventDefault();
     anchor.focus();
   }
 });
