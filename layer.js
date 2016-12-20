@@ -21,7 +21,7 @@ export default function Layer() {
   context.node = document.createElement('div');
   context.__node = $(context.node)
     // 设定 tab 索引
-    .attr('tabindex', '0')
+    .attr('tabindex', '-1')
     // 得到焦点
     .on('focusin', function() {
       if (context !== Layer.active) {
