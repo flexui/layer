@@ -3,7 +3,7 @@ import Events from '@flexui/events';
 import * as Utils from '@flexui/utils';
 import { getZIndex } from '@flexui/z-index';
 import { BACKDROP } from './lib/backdrop.js';
-import { TAB_LOCK } from './lib/tab-lock.js';
+import { FOCUS_SHIM } from './lib/focus-shim.js';
 
 // 得到焦点类名
 var LAYER_CLASS_FOCUS = '-focus';
@@ -49,7 +49,7 @@ Utils.doc.on('focusin', function(e) {
           anchor.focus();
         }
         break;
-      case TAB_LOCK.node[0]:
+      case FOCUS_SHIM.node[0]:
         anchor.focus();
         break;
     }
@@ -249,7 +249,7 @@ Utils.inherits(Layer, Events, {
         }
 
         // 焦点锁定层
-        TAB_LOCK[method](context);
+        FOCUS_SHIM[method](context);
         break;
       case 'z-index':
         if (context.modal) {
